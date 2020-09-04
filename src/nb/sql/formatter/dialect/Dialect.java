@@ -15,15 +15,17 @@
  */
 package nb.sql.formatter.dialect;
 
+import nb.sql.formatter.constants.ConstantDataManager;
+
 /**
  *
  * @author Arthur Sadykov
  */
 public enum Dialect {
-    SQL("Standard SQL"),
-    N1QL("Couchbase N1QL"),
-    DB2("IBM DB2"),
-    PL_SQL("Oracle PL/SQL");
+    SQL(ConstantDataManager.STANDARD_SQL_DIALECT_NAME),
+    N1QL(ConstantDataManager.COUCHBASE_N1QL_DIALECT_NAME),
+    DB2(ConstantDataManager.IBM_DB2_DIALECT_NAME),
+    PL_SQL(ConstantDataManager.ORACLE_PL_SQL_DIALECT_NAME);
     private final String name;
 
     private Dialect(String name) {
@@ -32,17 +34,17 @@ public enum Dialect {
 
     public static String getId(String name) {
         switch (name) {
-            case "Standard SQL": {
-                return "sql";
+            case ConstantDataManager.STANDARD_SQL_DIALECT_NAME: {
+                return ConstantDataManager.STANDARD_SQL_DIALECT_ID;
             }
-            case "Couchbase N1QL": {
-                return "n1ql";
+            case ConstantDataManager.COUCHBASE_N1QL_DIALECT_NAME: {
+                return ConstantDataManager.COUCHBASE_N1QL_DIALECT_ID;
             }
-            case "IBM DB2": {
-                return "db2";
+            case ConstantDataManager.IBM_DB2_DIALECT_NAME: {
+                return ConstantDataManager.IBM_DB2_DIALECT_ID;
             }
-            case "Oracle PL/SQL": {
-                return "pl/sql";
+            case ConstantDataManager.ORACLE_PL_SQL_DIALECT_NAME: {
+                return ConstantDataManager.ORACLE_PL_SQL_DIALECT_ID;
             }
             default: {
                 throw new IllegalArgumentException("Dialect.getId: invalid dialect name.");
@@ -52,16 +54,16 @@ public enum Dialect {
 
     public static Dialect get(String name) {
         switch (name) {
-            case "Standard SQL": {
+            case ConstantDataManager.STANDARD_SQL_DIALECT_NAME: {
                 return SQL;
             }
-            case "Couchbase N1QL": {
+            case ConstantDataManager.COUCHBASE_N1QL_DIALECT_NAME: {
                 return N1QL;
             }
-            case "IBM DB2": {
+            case ConstantDataManager.IBM_DB2_DIALECT_NAME: {
                 return DB2;
             }
-            case "Oracle PL/SQL": {
+            case ConstantDataManager.ORACLE_PL_SQL_DIALECT_NAME: {
                 return PL_SQL;
             }
             default: {

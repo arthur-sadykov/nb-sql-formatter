@@ -21,11 +21,19 @@ package nb.sql.formatter.constants;
  */
 public class ConstantDataManager {
 
+    public static final String COUCHBASE_N1QL_DIALECT_ID = "n1ql";
+    public static final String COUCHBASE_N1QL_DIALECT_NAME = "Couchbase N1QL";
     public static final String DIALECT = "dialect";
     public static final String DEFAULT_DIALECT = "Standard SQL";
     public static final int DEFAULT_INDENT = 2;
+    public static final String IBM_DB2_DIALECT_ID = "db2";
+    public static final String IBM_DB2_DIALECT_NAME = "IBM DB2";
     public static final String INDENT = "indent";
+    public static final String ORACLE_PL_SQL_DIALECT_ID = "pl/sql";
+    public static final String ORACLE_PL_SQL_DIALECT_NAME = "Oracle PL/SQL";
     public static final String SPACE = " ";
+    public static final String STANDARD_SQL_DIALECT_ID = "sql";
+    public static final String STANDARD_SQL_DIALECT_NAME = "Standard SQL";
 
     private ConstantDataManager() {
     }
