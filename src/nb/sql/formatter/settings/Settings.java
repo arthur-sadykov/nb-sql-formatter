@@ -32,7 +32,7 @@ public class Settings {
     public static String getSelectedDialectId() {
         Preferences prefs = NbPreferences.forModule(Settings.class);
         String dialectName = prefs.get(ConstantDataManager.DIALECT, ConstantDataManager.DEFAULT_DIALECT);
-        return Dialect.getId(dialectName);
+        return Dialect.get(dialectName).getId();
     }
 
     public static String getIndentString() {

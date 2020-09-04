@@ -17,10 +17,16 @@ package nb.sql.formatter.ui;
 
 import java.util.prefs.Preferences;
 import nb.sql.formatter.constants.ConstantDataManager;
+import nb.sql.formatter.dialect.CouchbaseN1QLlDialect;
 import nb.sql.formatter.dialect.Dialect;
+import nb.sql.formatter.dialect.IBMDB2Dialect;
+import nb.sql.formatter.dialect.OraclePLSQLDialect;
+import nb.sql.formatter.dialect.StandardSQLDialect;
 import org.openide.util.NbPreferences;
 
-final class SQLFormatterPanel extends javax.swing.JPanel {
+class SQLFormatterPanel extends javax.swing.JPanel {
+
+    private static final long serialVersionUID = 1L;
 
     private final SQLFormatterOptionsPanelController controller;
 
@@ -46,40 +52,41 @@ final class SQLFormatterPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(dialectLabel, org.openide.util.NbBundle.getMessage(SQLFormatterPanel.class, "SQLFormatterPanel.dialectLabel.text")); // NOI18N
 
-        dialectComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new Dialect[] {Dialect.SQL, Dialect.N1QL, Dialect.DB2, Dialect.PL_SQL}));
+        dialectComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new Dialect[] {new StandardSQLDialect(),
+            new CouchbaseN1QLlDialect(), new IBMDB2Dialect(), new OraclePLSQLDialect()}));
 
-        org.openide.awt.Mnemonics.setLocalizedText(indentLabel, org.openide.util.NbBundle.getMessage(SQLFormatterPanel.class, "SQLFormatterPanel.indentLabel.text")); // NOI18N
+org.openide.awt.Mnemonics.setLocalizedText(indentLabel, org.openide.util.NbBundle.getMessage(SQLFormatterPanel.class, "SQLFormatterPanel.indentLabel.text")); // NOI18N
 
-        indentSpinner.setModel(new javax.swing.SpinnerNumberModel(2, 0, 50, 1));
+indentSpinner.setModel(new javax.swing.SpinnerNumberModel(2, 0, 50, 1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(indentLabel)
-                    .addComponent(dialectLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dialectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(indentSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dialectLabel)
-                    .addComponent(dialectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(indentLabel)
-                    .addComponent(indentSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+this.setLayout(layout);
+layout.setHorizontalGroup(
+    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(indentLabel)
+            .addComponent(dialectLabel))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dialectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(indentSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(dialectLabel)
+                .addComponent(dialectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(indentLabel)
+                .addComponent(indentSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
     }// </editor-fold>//GEN-END:initComponents
 
     void load() {
@@ -96,7 +103,7 @@ final class SQLFormatterPanel extends javax.swing.JPanel {
 
     void store() {
         Preferences p = getPreferencesForModule();
-        p.put(ConstantDataManager.DIALECT, (String) dialectComboBox.getSelectedItem().toString());
+        p.put(ConstantDataManager.DIALECT, dialectComboBox.getSelectedItem().toString());
         p.putInt(ConstantDataManager.INDENT, (int) indentSpinner.getValue());
     }
 

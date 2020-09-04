@@ -21,59 +21,35 @@ import nb.sql.formatter.constants.ConstantDataManager;
  *
  * @author Arthur Sadykov
  */
-public enum Dialect {
-    SQL(ConstantDataManager.STANDARD_SQL_DIALECT_NAME),
-    N1QL(ConstantDataManager.COUCHBASE_N1QL_DIALECT_NAME),
-    DB2(ConstantDataManager.IBM_DB2_DIALECT_NAME),
-    PL_SQL(ConstantDataManager.ORACLE_PL_SQL_DIALECT_NAME);
-    private final String name;
-
-    private Dialect(String name) {
-        this.name = name;
-    }
-
-    public static String getId(String name) {
-        switch (name) {
-            case ConstantDataManager.STANDARD_SQL_DIALECT_NAME: {
-                return ConstantDataManager.STANDARD_SQL_DIALECT_ID;
-            }
-            case ConstantDataManager.COUCHBASE_N1QL_DIALECT_NAME: {
-                return ConstantDataManager.COUCHBASE_N1QL_DIALECT_ID;
-            }
-            case ConstantDataManager.IBM_DB2_DIALECT_NAME: {
-                return ConstantDataManager.IBM_DB2_DIALECT_ID;
-            }
-            case ConstantDataManager.ORACLE_PL_SQL_DIALECT_NAME: {
-                return ConstantDataManager.ORACLE_PL_SQL_DIALECT_ID;
-            }
-            default: {
-                throw new IllegalArgumentException("Dialect.getId: invalid dialect name.");
-            }
-        }
-    }
-
+public abstract class Dialect {
+    
     public static Dialect get(String name) {
         switch (name) {
             case ConstantDataManager.STANDARD_SQL_DIALECT_NAME: {
-                return SQL;
+                return new StandardSQLDialect();
             }
             case ConstantDataManager.COUCHBASE_N1QL_DIALECT_NAME: {
-                return N1QL;
+                return new CouchbaseN1QLlDialect();
             }
             case ConstantDataManager.IBM_DB2_DIALECT_NAME: {
-                return DB2;
+                return new IBMDB2Dialect();
             }
             case ConstantDataManager.ORACLE_PL_SQL_DIALECT_NAME: {
-                return PL_SQL;
+                return new OraclePLSQLDialect();
             }
             default: {
-                throw new IllegalArgumentException("Dialect.get: invalid dialect name.");
+                throw new IllegalArgumentException("Dialect.get: unsupported dialect.");
             }
         }
     }
-
+    
+    public abstract String getId();
+    
+    public abstract String getName();
+    
     @Override
     public String toString() {
-        return name;
+        return getName();
     }
+    
 }

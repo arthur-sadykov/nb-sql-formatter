@@ -82,7 +82,7 @@
     <Component class="javax.swing.JComboBox" name="dialectComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new Dialect[] {Dialect.SQL, Dialect.N1QL, Dialect.DB2, Dialect.PL_SQL})" type="code"/>
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new Dialect[] {new StandardSQLDialect(), &#xa;        new CouchbaseN1QLlDialect(), new IBMDB2Dialect(), new OraclePLSQLDialect()})" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
